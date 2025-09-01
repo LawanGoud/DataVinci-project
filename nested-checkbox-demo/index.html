@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nested Checkbox — Demo</title>
+  <style>
+    :root{--ink:#1f1f1f;--muted:#666;--accent:#6d2aff;--line:#e6e6ea}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;margin:0;background:#fff;color:var(--ink)}
+    .wrap{max-width:720px;margin:28px auto;padding:0 18px}
+    h1{margin:0 0 8px;font-size:24px}
+    p{color:var(--muted)}
+    .panel{border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:14px}
+    label{display:block;cursor:pointer;line-height:1.6}
+    .group{margin-top:10px}
+    .children{margin-left:22px;padding-left:8px;border-left:2px solid #f2f2f6}
+    .bar{display:flex;gap:8px;align-items:center;margin-top:10px}
+    .btn{border:1px solid var(--line);background:#fafafa;border-radius:999px;padding:8px 12px;cursor:pointer}
+    .btn:hover{border-color:#cfcfe6}
+    .state{font-family:ui-monospace,SFMono-Regular,Consolas,Monaco,monospace;background:#0b1020;color:#e3f6ff;border-radius:10px;padding:10px;overflow:auto}
+    .tip{font-size:13px;color:var(--muted);margin-top:8px}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <h1>Nested Checkbox — Live Demo</h1>
+    <p>Try the checkboxes. Parents &amp; “Select All” update automatically, including the <em>indeterminate</em> state.</p>
+
+    <section class="panel">
+      <label><input type="checkbox" id="selectAll" /> <strong>Select All</strong></label>
+
+      <div class="group">
+        <label><input type="checkbox" class="category-checkbox" data-category="fruits" /> Fruits</label>
+        <div class="children">
+          <label><input type="checkbox" class="fruit" /> Apple</label>
+          <label><input type="checkbox" class="fruit" /> Banana</label>
+          <label><input type="checkbox" class="fruit" /> Orange</label>
+        </div>
+      </div>
+
+      <div class="group">
+        <label><input type="checkbox" class="category-checkbox" data-category="vegetables" /> Vegetables</label>
+        <div class="children">
+          <label><input type="checkbox" class="vegetable" /> Carrot</label>
+          <label><input type="checkbox" class="vegetable" /> Broccoli</label>
+          <label><input type="checkbox" class="vegetable" /> Potato</label>
+        </div>
+      </div>
+
+      <div class="bar">
+        <button class="btn" id="checkSome">Check Apple & Banana</button>
+        <button class="btn" id="reset">Reset</button>
+      </div>
+      <div class="tip">Keyboard tip: focus a checkbox and press Space; Tab moves focus, Shift+Tab goes back.</div>
+    </section>
+
+    <section class="panel">
+      <strong>State</strong>
+      <pre id="state" class="state"></pre>
+    </section>
+  </main>
+
+  <script>
+    const selectAll = document.getElementById("selectAll");
+    const parentBoxes = Array.from(document.querySelectorAll(".category-checkbox"));
+    const categories = {
+      fruits: Array.from(document.querySelectorAll(".fruit")),
+      vegetables: Array.from(document.querySelectorAll(".vegetable")),
+    };
+    const parents = Object.fromEntries(parentBoxes.map(cb => [cb.dataset.category, cb]));
+    const allChildren = () => Object.values(categories).flat();
+
+    function setChildren(items, checked) {
+      items.forEach(cb => cb.checked = checked);
+    }
+
+    function updateCategoryState(category) {
+      const items = categories[category];
+      const parent = parents[category];
+      const total = items.length;
+      const checkedCount = items.filter(i => i.checked).length;
+      parent.checked = checkedCount === total;
+      parent.indeterminate = checkedCount > 0 && checkedCount < total;
+    }
+
+    function updateAllParents() { Object.keys(categories).forEach(updateCategoryState); }
+
+    function updateSelectAllState() {
+      const items = allChildren();
+      const total = items.length;
+      const checkedCount = items.filter(i => i.checked).length;
+      selectAll.checked = checkedCount === total;
+      selectAll.indeterminate = checkedCount > 0 && checkedCount < total;
+    }
+
+    function renderState() {
+      const s = {
+        selectAll: { checked: selectAll.checked, indeterminate: selectAll.indeterminate },
+        fruits: {
+          parent: { checked: parents.fruits.checked, indeterminate: parents.fruits.indeterminate },
+          items: categories.fruits.map((c,i)=>({ i, checked:c.checked }))
+        },
+        vegetables: {
+          parent: { checked: parents.vegetables.checked, indeterminate: parents.vegetables.indeterminate },
+          items: categories.vegetables.map((c,i)=>({ i, checked:c.checked }))
+        }
+      };
+      document.getElementById("state").textContent = JSON.stringify(s, null, 2);
+    }
+
+    // Events
+    selectAll.addEventListener("change", (e) => {
+      const checked = e.target.checked;
+      parentBoxes.forEach(p => { p.indeterminate = false; p.checked = checked; });
+      Object.values(categories).forEach(list => setChildren(list, checked));
+      updateAllParents();
+      updateSelectAllState();
+      renderState();
+    });
+
+    parentBoxes.forEach(cb => {
+      cb.addEventListener("change", (e) => {
+        const category = e.target.dataset.category;
+        const checked = e.target.checked;
+        setChildren(categories[category], checked);
+        cb.indeterminate = false;
+        updateCategoryState(category);
+        updateSelectAllState();
+        renderState();
+      });
+    });
+
+    Object.entries(categories).forEach(([cat, list]) => {
+      list.forEach(item => {
+        item.addEventListener("change", () => {
+          updateCategoryState(cat);
+          updateSelectAllState();
+          renderState();
+        });
+      });
+    });
+
+    // Demo buttons
+    document.getElementById("checkSome").addEventListener("click", () => {
+      categories.fruits.forEach((c, idx) => c.checked = (idx === 0 || idx === 1));
+      categories.vegetables.forEach(c => c.checked = false);
+      updateAllParents();
+      updateSelectAllState();
+      renderState();
+    });
+
+    document.getElementById("reset").addEventListener("click", () => {
+      allChildren().forEach(c => c.checked = false);
+      updateAllParents();
+      updateSelectAllState();
+      renderState();
+    });
+
+    // initial paint
+    updateAllParents();
+    updateSelectAllState();
+    renderState();
+  </script>
+</body>
+</html>
