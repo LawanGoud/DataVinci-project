@@ -1,0 +1,8 @@
+.purchase-options{margin-top:10px}
+.purchase-options__label{text-transform:uppercase;letter-spacing:.04em;font-size:12px;color:#6d6d6d;margin:14px 0 8px}
+.purchase-options__box{background:#f6f7f9;border:1px solid var(--color-border);border-radius:16px;padding:12px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.purchase-options__pill{flex:1 1 260px;display:flex;justify-content:space-between;align-items:center;border:none;border-radius:var(--radius-round);padding:14px 18px;background:#f3b22b;color:#000;font-weight:800;cursor:pointer}
+.purchase-options__pill--outline{background:#fff;border:1.5px solid #dcdcdc;font-weight:700}
+.purchase-options__pill--active{box-shadow:0 0 0 3px rgba(252,191,49,.26)}
+.purchase-options__price{opacity:.95}
+.purchase-options__note{display:flex;align-items:center;gap:8px;color:#444;font-size:14px;margin-top:8px}

@@ -1,0 +1,17 @@
+.bundle-offer{margin-top:8px}
+.bundle-offer__header{display:flex;align-items:center;gap:10px;font-weight:900;margin:8px 6px}
+.bundle-offer__chev{border:none;background:transparent;font-size:20px;cursor:pointer}
+.bundle-offer__card{display:flex;justify-content:space-between;gap:16px;background:#f3f4f6;border:1px solid var(--color-border);border-radius:16px;padding:16px;align-items:center;flex-wrap:wrap}
+.bundle-offer__items{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.bundle-offer__item{display:flex;flex-direction:column;align-items:center;gap:8px;width:120px}
+.bundle-offer__image{background:#fff;border:1px solid var(--color-border);border-radius:12px;padding:8px;width:100%;height:100px;display:grid;place-items:center}
+.bundle-offer__image img{max-width:100%;max-height:100%}
+.bundle-offer__plus{font-weight:900;color:#bdbdbd;font-size:22px}
+.bundle-offer__item-title{text-align:center;font-weight:800}
+.bundle-offer__select{border:1px solid var(--color-border);background:#fff;border-radius:var(--radius-round);padding:6px 10px}
+.bundle-offer__aside{margin-left:auto;min-width:260px;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.bundle-offer__price s{color:#9b9b9b;margin-right:8px}
+.bundle-offer__price strong{font-size:18px;margin-right:8px}
+.bundle-offer__save{color:var(--color-save);font-weight:800}
+.bundle-offer__cta{background:#2b2b2b;color:#fff;border:none;border-radius:var(--radius-round);padding:12px 18px;font-weight:900;cursor:pointer}
+@media (max-width:720px){.bundle-offer__aside{align-items:stretch;min-width:unset;width:100%}.bundle-offer__cta{width:100%}}

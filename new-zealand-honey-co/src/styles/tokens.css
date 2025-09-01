@@ -1,0 +1,35 @@
+:root{
+  /* Colors */
+  --color-bg:#ffffff;
+  --color-surface:#faf9f4;
+  --color-text:#1f1f1f;
+  --color-muted:#6f6f6f;
+  --color-line:#e9e6dd;
+  --color-border:#e9e9ef;
+  --color-accent:#8e2bff;
+  --color-accent-strong:#6d2aff;
+  --color-star:#ffb400;
+  --color-cta:#1d1d1f;
+  --color-save:#0c7c2a;
+  --color-scrim:rgba(0,0,0,.45);
+
+  /* Space scale */
+  --space-0:0;
+  --space-1:4px;
+  --space-2:8px;
+  --space-3:12px;
+  --space-4:16px;
+  --space-5:20px;
+  --space-6:24px;
+  --space-7:28px;
+  --space-8:32px;
+
+  /* Radius */
+  --radius-8:8px;
+  --radius-12:12px;
+  --radius-16:16px;
+  --radius-round:999px;
+
+  /* Shadows */
+  --shadow-md:0 10px 35px rgba(0,0,0,.15);
+}

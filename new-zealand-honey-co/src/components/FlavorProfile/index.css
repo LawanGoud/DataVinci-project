@@ -1,0 +1,7 @@
+.flavor-profile{margin:16px 0}
+.flavor-profile__label{text-transform:uppercase;letter-spacing:.04em;font-size:12px;color:#6d6d6d;margin:14px 0 10px}
+.flavor-profile__track{position:relative;height:18px;background:linear-gradient(90deg,#ff7adf,#b73cff,#6cd2ff,#6ce67a);border-radius:3px}
+.flavor-profile__range{-webkit-appearance:none;width:100%;background:transparent;height:18px;position:relative}
+.flavor-profile__range::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#2f2f2f;border:2px solid #fff;box-shadow:0 0 0 2px rgba(0,0,0,.06)}
+.flavor-profile__range::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#2f2f2f;border:2px solid #fff}
+.flavor-profile__scale{display:flex;justify-content:space-between;color:#444;margin-top:8px;font-size:14px}
